@@ -1,5 +1,5 @@
 library(dplyr)
-data <- read.csv('\\Users\\timot\\Downloads\\cbd_data.csv')
+data <- read.csv('cbd_data.csv')
 small <- data %>% slice(1:1000)
 
 summary <- data %>% group_by(Gender, Zip.Code) %>% mutate(total_sales = sum(Price)) %>% 
