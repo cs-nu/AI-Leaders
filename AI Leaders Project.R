@@ -11,7 +11,20 @@ summary <- data %>% group_by(Gender, Zip.Code) %>% mutate(total_sales = sum(Pric
   # Do we care more revenue or profit at this stage
   # Do we have data over a longer time horizon that allows us to track behavior over time
 ## Demand by Plant Type
+  # Based on the products in the data, what is the best way to identify which ones use consistent plants across product types?
 ## Quickly identify model breakdowns (and why)
-## Correlate customer value with ad targetable metrics
+  # What constitutes an "Anomaly"
+## Correlate customer value with ad target-able metrics
+  # What metrics are useful when targeting ads?
 
-## What links have been seen in the past between medical data and recreational data
+## What links have been seen in the past between medical data and recreational data?
+
+## Business Questions:
+  # Which KPI is most important?
+  # How receptive to change are those at the client and what institutional barriers exist?
+  # What are the key stakeholders in the business segments that may be impacted by AI driven changes?
+  # How well positioned is the company to change policy/procedure if optimizations are identified?
+    # Which process are flexible, and which are fully immutable?
+
+
+
