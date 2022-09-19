@@ -21,6 +21,7 @@ summary <- data %>% group_by(Gender, Zip.Code) %>% mutate(total_sales = sum(Pric
 
 ## Business Questions:
   # Which KPI is most important?
+    # Are there metrics other than the KPI which we must ensure are not negatively impacted?
   # How receptive to change are those at the client and what institutional barriers exist?
   # What are the key stakeholders in the business segments that may be impacted by AI driven changes?
   # How well positioned is the company to change policy/procedure if optimizations are identified?
