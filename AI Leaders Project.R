@@ -2,30 +2,22 @@ library(dplyr)
 data <- read.csv('cbd_data.csv')
 small <- data %>% slice(1:1000)
 
-summary <- data %>% group_by(Gender, Zip.Code) %>% mutate(total_sales = sum(Price)) %>% 
-  ungroup() %>% select(Gender, Zip.Code, total_sales) %>% distinct()
+cust_summary <- data %>% group_by(Patient.ID) %>% 
+  mutate(trans_id = row_number(), sales = sum(Price), num_trans = n()) %>%
+  ungroup() %>% select(Patient.ID, Gender, Zip.Code, Age, sales, num_trans) %>% distinct() 
 
-## Revenue
-## Lifetime Customer Value
-  # What does "lifetime" mean e.g. do we want to invest in customers now who are 20 because they might spend a lot when they're 80
-  # Do we care more revenue or profit at this stage
-  # Do we have data over a longer time horizon that allows us to track behavior over time
-## Demand by Plant Type
-  # Based on the products in the data, what is the best way to identify which ones use consistent plants across product types?
-## Quickly identify model breakdowns (and why)
-  # What constitutes an "Anomaly"
-## Correlate customer value with ad target-able metrics
-  # What metrics are useful when targeting ads?
+summary <- cust_summary %>% group_by(Age) %>% 
+  mutate(avg_sales = mean(sales), num_customers = n(), total_trans = sum(num_trans)) %>% 
+  ungroup() %>% select(Age, avg_sales, num_customers, total_trans) %>% distinct()
 
-## What links have been seen in the past between medical data and recreational data?
-
-## Business Questions:
-  # Which KPI is most important?
-    # Are there metrics other than the KPI which we must ensure are not negatively impacted?
-  # How receptive to change are those at the client and what institutional barriers exist?
-  # What are the key stakeholders in the business segments that may be impacted by AI driven changes?
-  # How well positioned is the company to change policy/procedure if optimizations are identified?
-    # Which process are flexible, and which are fully immutable?
-
-
+broad_summary <- cust_summary %>% mutate(age_group = case_when(Age < 21 ~ 'infant',
+                                                           Age < 25 ~ 'college',
+                                                           Age < 30 ~ 'youngish',
+                                                           Age < 40 ~ 'middle-age',
+                                                           Age < 50 ~ 'parents',
+                                                           Age < 65 ~ 'old professionals',
+                                                           Age < 80 ~ 'retirees',
+                                                           TRUE ~ 'Skeletons')) %>% group_by(age_group) %>% 
+  mutate(avg_sales = mean(sales), num_customers = n(), total_trans = sum(num_trans)) %>% 
+  ungroup() %>% select(Age, avg_sales, num_customers, total_trans) %>% distinct()
 
